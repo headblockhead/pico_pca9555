@@ -1,4 +1,4 @@
-# pico-pca9555
+# pico_pca9555
 A C library for controlling the PCA9555/TCA9555 I2C IO expander with the Raspberry Pi Pico.
 
 ## Development

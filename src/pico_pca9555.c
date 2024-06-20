@@ -1,4 +1,4 @@
-#include "pico-pca9555.h"
+#include "pico_pca9555.h"
 
 // Constants for I2C communication
 const uint8_t PCA9555_CMD_SET_INPUTS_0 = _u(0x00);
