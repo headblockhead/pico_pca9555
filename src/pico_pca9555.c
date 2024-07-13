@@ -91,14 +91,12 @@ int pca9555_input_inversion_1(i2c_inst_t *i2c_instance, uint8_t i2c_address,
 int pca9555_output(i2c_inst_t *i2c_instance, uint8_t i2c_address,
                    uint16_t output_value) {
   // Two sets of 8-bit outputs
-  uint8_t outputs_0[2] = {PCA9555_CMD_SET_OUTPUTS_0, output_value & 0xFF};
-  uint8_t outputs_1[2] = {PCA9555_CMD_SET_OUTPUTS_1,
-                          (output_value >> 8) & 0xFF};
-  int err = pca9555_output_0(i2c_instance, i2c_address, outputs_0[1]);
+  int err = pca9555_output_0(i2c_instance, i2c_address, output_value & 0xFF);
   if (err < 0) {
     return err;
   }
-  return pca9555_output_1(i2c_instance, i2c_address, outputs_1[1]);
+  return pca9555_output_1(i2c_instance, i2c_address,
+                          (output_value >> 8) & 0xFF);
 }
 
 int pca9555_output_0(i2c_inst_t *i2c_instance, uint8_t i2c_address,
