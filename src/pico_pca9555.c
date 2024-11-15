@@ -1,8 +1,8 @@
 #include "pico_pca9555.h"
 
 // Constants for I2C communication
-const uint8_t PCA9555_CMD_SET_INPUTS_0 = _u(0x00);
-const uint8_t PCA9555_CMD_SET_INPUTS_1 = _u(0x01);
+const uint8_t PCA9555_CMD_READ_INPUTS_0 = _u(0x00);
+const uint8_t PCA9555_CMD_READ_INPUTS_1 = _u(0x01);
 const uint8_t PCA9555_CMD_SET_OUTPUTS_0 = _u(0x02);
 const uint8_t PCA9555_CMD_SET_OUTPUTS_1 = _u(0x03);
 const uint8_t PCA9555_CMD_POLARITY_INVERT_0 = _u(0x04);
@@ -32,12 +32,16 @@ int pca9555_read_input(i2c_inst_t *i2c_instance, uint8_t i2c_address,
 int pca9555_read_input_0(i2c_inst_t *i2c_instance, uint8_t i2c_address,
                          uint8_t *inputs) {
   // Read the 8-bit input value
+  i2c_write_blocking(i2c_instance, i2c_address, &PCA9555_CMD_READ_INPUTS_0, 1,
+                     true);
   return i2c_read_blocking(i2c_instance, i2c_address, inputs, 1, false);
 }
 
 int pca9555_read_input_1(i2c_inst_t *i2c_instance, uint8_t i2c_address,
                          uint8_t *inputs) {
   // Read the 8-bit input value
+  i2c_write_blocking(i2c_instance, i2c_address, &PCA9555_CMD_READ_INPUTS_1, 1,
+                     true);
   return i2c_read_blocking(i2c_instance, i2c_address, inputs, 1, false);
 }
 
