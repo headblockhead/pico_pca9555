@@ -12,8 +12,8 @@
           };
         in
         rec {
-          packages.pico_pca9555 = pkgs.stdenv.mkDerivation {
-            name = "pico_pca9555";
+          packages.pico-pca9555 = pkgs.stdenv.mkDerivation {
+            name = "pico-pca9555";
             src = ./.;
             env = {
               PICO_SDK_PATH = "${pkgs.pico-sdk}/lib/pico-sdk";
@@ -30,13 +30,13 @@
             installPhase = ''
               runHook preInstall
               mkdir -p $out/lib
-              mkdir -p $out/include/pico_pca9555
-              cp libpico_pca9555.a $out/lib/
-              cp $src/include/* $out/include/pico_pca9555/
+              mkdir -p $out/include/pico-pca9555
+              cp libpico-pca9555.a $out/lib/
+              cp $src/include/* $out/include/pico-pca9555/
               runHook postInstall
             '';
           };
-          packages.default = packages.pico_pca9555;
+          packages.default = packages.pico-pca9555;
         }
       );
 }
