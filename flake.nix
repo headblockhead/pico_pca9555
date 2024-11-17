@@ -11,7 +11,7 @@
             inherit system;
           };
         in
-        {
+        rec {
           packages.pico_pca9555 = pkgs.stdenv.mkDerivation {
             name = "pico_pca9555";
             src = ./.;
@@ -36,6 +36,7 @@
               runHook postInstall
             '';
           };
+          packages.default = packages.pico_pca9555;
         }
       );
 }
