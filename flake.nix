@@ -1,41 +1,38 @@
 {
-  description = "Tools for developing, building and debugging the pca9555 library.";
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.11";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05";
     flake-utils.url = "github:numtide/flake-utils";
-    xc.url = "github:joerdav/xc";
   };
-  outputs = { self, nixpkgs, flake-utils, ... }@inputs:
+  outputs = { nixpkgs, flake-utils, ... }:
     flake-utils.lib.eachDefaultSystem
       (system:
         let
           pkgs = import nixpkgs {
             inherit system;
-            overlays = [
-              (final: prev: {
-                xc = inputs.xc.packages.x86_64-linux.xc;
-              })
-            ];
           };
         in
         {
-          devShells.default = pkgs.mkShell {
-            buildInputs = with pkgs; [
-              xc
-
+          packages.pico_pca9555 = pkgs.stdenv.mkDerivation {
+            name = "pico_pca9555";
+            src = ./.;
+            env = {
+              PICO_SDK_PATH = "${pkgs.pico-sdk}/lib/pico-sdk";
+            };
+            nativeBuildInputs = with pkgs; [
               cmake
-              gcc
-              ccls
               gcc-arm-embedded
-              openocd
-              picotool
               python39
-              minicom
-              gnumake
-              gdb
-              git
-              cacert
             ];
+            cmakeFlags = [
+              "-DCMAKE_C_COMPILER=${pkgs.gcc-arm-embedded}/bin/arm-none-eabi-gcc"
+              "-DCMAKE_CXX_COMPILER=${pkgs.gcc-arm-embedded}/bin/arm-none-eabi-g++"
+            ];
+            installPhase = ''
+              runHook preInstall
+              mkdir -p $out/lib
+              cp libpico_pca9555.a $out/lib/
+              runHook postInstall
+            '';
           };
         }
       );

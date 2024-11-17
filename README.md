@@ -1,4 +1,7 @@
 # pico_pca9555
+
+![Nix Flake](https://img.shields.io/badge/NIX%20FLAKE-5277C3.svg?logo=NixOS&logoColor=white) [![xc compatible](https://xcfile.dev/badge.svg)](https://xcfile.dev)
+
 A C library for controlling the PCA9555/TCA9555 I2C IO expander with the Raspberry Pi Pico.
 
 ## Development
@@ -8,7 +11,7 @@ To develop, run the nix shell using `nix develop`. This library can also be buil
 
 ## Tasks
 
-### Build
+### build
 Directory: ./build
 
 Build a static archive library (`.a`).
@@ -18,10 +21,10 @@ cmake -DCMAKE_BUILD_TYPE=Release ..
 make -j4
 ```
 
-### Build-debug
+### build-dbg
 Directory: ./build
 
-Builds the library with debug build type.
+Build the library with debug information.
 
 ```bash
 cmake -DCMAKE_BUILD_TYPE=Debug .. 
@@ -29,17 +32,10 @@ make -j4
 cp compile_commands.json ../ # Copies the autocomplete information for ccls.
 ```
 
-### Clean
+### clean
 Cleans the build directory for a fresh build.
 
 ```bash
 rm -rf ./build
 mkdir build
-```
-
-### Init-submodules
-
-Fetches submodules for use in the project.
-```bash
-git submodule update --init --recursive
 ```
