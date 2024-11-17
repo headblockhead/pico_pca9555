@@ -30,7 +30,9 @@
             installPhase = ''
               runHook preInstall
               mkdir -p $out/lib
+              mkdir -p $out/include/pico_pca9555
               cp libpico_pca9555.a $out/lib/
+              cp $src/include/* $out/include/pico_pca9555/
               runHook postInstall
             '';
           };
